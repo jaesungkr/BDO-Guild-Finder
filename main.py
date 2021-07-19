@@ -3,8 +3,14 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import openpyxl
 
-def crew_crawling(guild_name):
+def find_user(username, guild_lists):
+    for i in range(len(guild_lists)):
+        tmp, guild = crew_crawling(guild_lists[i])
+        if username in guild:
+            return guild_lists[i]
 
+
+def crew_crawling(guild_name):
     url = f"https://www.kr.playblackdesert.com/Adventure/Guild/GuildProfile?guildName={guild_name}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -16,11 +22,10 @@ def crew_crawling(guild_name):
     people_list = unordered_list
 
     for x in people_list:
-        crew_list.append(re.compile('">([a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+)').findall(str(x)))
+        crew_list.append(re.compile('">([0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+)').findall(str(x))[0])
     # number of crew members
     n_crew = len(crew_list)
     return n_crew, crew_list
-
 
 def saving_list(crew_list):
     df = pd.DataFrame(crew_list)
@@ -28,17 +33,20 @@ def saving_list(crew_list):
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
 
-
 def compare_list():
     a = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')
     print(len(a[0]))
 
 def send_notification():
+    pass
 
 
 
 
 guild = '우리와써또와써'
-length, my_list = crew_crawling(guild)
-saving_list(my_list)
-compare_list()
+list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
+user = str(input("What's the username ? "))
+print(find_user(user, list_g))
+#length, my_list = crew_crawling(guild)
+#saving_list(my_list)
+#compare_list()
