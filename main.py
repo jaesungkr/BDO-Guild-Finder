@@ -6,8 +6,9 @@ import openpyxl
 def find_user(username, guild_lists):
     for i in range(len(guild_lists)):
         tmp, guild = crew_crawling(guild_lists[i])
+        # print(guild)
         if username in guild:
-            return guild_lists[i]
+            return guild_lists[i], tmp
 
 
 def crew_crawling(guild_name):
@@ -46,7 +47,10 @@ def send_notification():
 guild = '우리와써또와써'
 list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
 user = str(input("What's the username ? "))
-print(find_user(user, list_g))
+store = find_user(user, list_g)
+print()
+print(store[0])
+print("길드 인원 수 :", store[1])
 #length, my_list = crew_crawling(guild)
 #saving_list(my_list)
 #compare_list()
