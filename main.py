@@ -36,21 +36,18 @@ def saving_list(crew_list):
 
 def compare_list():
     a = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')
-    print(len(a[0]))
+    print(a[0])
 
 def send_notification():
     pass
-
-
-
-
-guild = '우리와써또와써'
+'''
 list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
 user = str(input("What's the username ? "))
 store = find_user(user, list_g)
 print()
 print(store[0])
 print("길드 인원 수 :", store[1])
-#length, my_list = crew_crawling(guild)
+'''
+compare_list()
 #saving_list(my_list)
 #compare_list()
