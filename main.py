@@ -34,9 +34,18 @@ def saving_list(crew_list):
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
 
+# argument past_list, current_list
 def compare_list():
-    a = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')
-    print(a[0])
+    past_list = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')[0].values.tolist()
+    current_list = crew_crawling('우리와써또와써')[1]
+
+    past_list.sort()
+    current_list.sort()
+    if(past_list == current_list):
+        print("it's same")
+    print(past_list)
+    print(current_list)
+    print(past_list[0][0])
 
 def send_notification():
     pass
