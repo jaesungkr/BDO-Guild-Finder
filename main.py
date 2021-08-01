@@ -45,7 +45,18 @@ def compare_list():
         print("it's same")
     print(past_list)
     print(current_list)
-    print(past_list[0][0])
+
+    left_users = []
+    for i in past_list:
+        if i not in current_list:
+            left_users.append(i)
+    print(left_users)
+
+    new_users = []
+    for i in current_list:
+        if i not in past_list:
+            new_users.append(i)
+    print(new_users)
 
 def send_notification():
     pass
