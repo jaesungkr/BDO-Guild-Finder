@@ -1,6 +1,7 @@
 import requests, re
 from bs4 import BeautifulSoup
 import pandas as pd
+from datetime import datetime
 import openpyxl
 
 # scraping the bdo guild page
@@ -21,26 +22,23 @@ def crew_scraping(guild_name):
     n_crew = len(crew_list)
     return n_crew, crew_list
 
+# This function is to find specific user from a guild.
 def find_user(username, guild_lists):
     for i in range(len(guild_lists)):
         tmp, guild = crew_scraping(guild_lists[i])
-        # print(guild)
         if username in guild:
             return guild_lists[i], tmp
 
 def saving_list(crew_list, guild_name):
     df = pd.DataFrame(crew_list)
-    writer = pd.ExcelWriter(f'{guild_name}.xlsx', engine = 'xlsxwriter')
+    writer = pd.ExcelWriter(f'{guild_name}_{datetime.today().strftime("%Y-%m-%d")}.xlsx', engine = 'xlsxwriter')
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
 
 # This function meant to run once a day everyday to update all lists of crew members (in progress)
 def saving_everyday(guild_list):
-
     for i in range(len(guild_list)):
         saving_list(crew_scraping(guild_list[i])[1], guild_list[i])
-
-
 
 # argument past_list, current_list
 def compare_list():
