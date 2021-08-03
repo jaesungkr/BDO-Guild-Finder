@@ -35,11 +35,10 @@ def saving_list(crew_list, guild_name):
     writer.save()
 
 # This function meant to run once a day everyday to update all lists of crew members (in progress)
-def saving_everyday():
-    list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠',
-              'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
-    for i in range(len(list_g)):
-        saving_list(crew_scraping(list_g[i])[1], list_g[i])
+def saving_everyday(guild_list):
+
+    for i in range(len(guild_list)):
+        saving_list(crew_scraping(guild_list[i])[1], guild_list[i])
 
 
 
@@ -69,8 +68,9 @@ def compare_list():
 
 def send_notification():
     pass
-'''
+
 list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
+'''
 user = str(input("What's the username ? "))
 store = find_user(user, list_g)
 print()
@@ -80,4 +80,4 @@ print("길드 인원 수 :", store[1])
 #compare_list()
 #saving_list(my_list)
 #compare_list()
-saving_everyday()
+saving_everyday(list_g)
