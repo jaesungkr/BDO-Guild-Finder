@@ -3,15 +3,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import openpyxl
 
-def find_user(username, guild_lists):
-    for i in range(len(guild_lists)):
-        tmp, guild = crew_crawling(guild_lists[i])
-        # print(guild)
-        if username in guild:
-            return guild_lists[i], tmp
-
-
-def crew_crawling(guild_name):
+# scraping the bdo guild page
+def crew_scraping(guild_name):
     url = f"https://www.kr.playblackdesert.com/Adventure/Guild/GuildProfile?guildName={guild_name}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -28,16 +21,32 @@ def crew_crawling(guild_name):
     n_crew = len(crew_list)
     return n_crew, crew_list
 
-def saving_list(crew_list):
+def find_user(username, guild_lists):
+    for i in range(len(guild_lists)):
+        tmp, guild = crew_scraping(guild_lists[i])
+        # print(guild)
+        if username in guild:
+            return guild_lists[i], tmp
+
+def saving_list(crew_list, guild_name):
     df = pd.DataFrame(crew_list)
-    writer = pd.ExcelWriter('guild_info.xlsx', engine = 'xlsxwriter')
+    writer = pd.ExcelWriter(f'{guild_name}.xlsx', engine = 'xlsxwriter')
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
+
+# This function meant to run once a day everyday to update all lists of crew members (in progress)
+def saving_everyday():
+    list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠',
+              'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
+    for i in range(len(list_g)):
+        saving_list(crew_scraping(list_g[i])[1], list_g[i])
+
+
 
 # argument past_list, current_list
 def compare_list():
     past_list = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')[0].values.tolist()
-    current_list = crew_crawling('우리와써또와써')[1]
+    current_list = crew_scraping('우리와써또와써')[1]
 
     past_list.sort()
     current_list.sort()
@@ -68,6 +77,7 @@ print()
 print(store[0])
 print("길드 인원 수 :", store[1])
 '''
-compare_list()
+#compare_list()
 #saving_list(my_list)
 #compare_list()
+saving_everyday()
