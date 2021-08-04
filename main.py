@@ -2,6 +2,7 @@ import requests, re
 from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
+import os
 import openpyxl
 
 # scraping the bdo guild page
@@ -31,7 +32,13 @@ def find_user(username, guild_lists):
 
 def saving_list(crew_list, guild_name):
     df = pd.DataFrame(crew_list)
-    writer = pd.ExcelWriter(f'{guild_name}_{datetime.today().strftime("%Y-%m-%d")}.xlsx', engine = 'xlsxwriter')
+    try:
+        os.mkdir(f'{guild_name}')
+        print('created')
+    except FileExistsError:
+        print(f'{guild_name} file already exists')
+
+    writer = pd.ExcelWriter(f'{guild_name}\{guild_name}_{datetime.today().strftime("%Y-%m-%d")}.xlsx', engine = 'xlsxwriter')
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
 
