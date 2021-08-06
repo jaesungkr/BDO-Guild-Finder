@@ -27,8 +27,10 @@ def crew_scraping(guild_name):
 def find_user(username, guild_lists):
     for i in range(len(guild_lists)):
         tmp, guild = crew_scraping(guild_lists[i])
+
         if username in guild:
             return guild_lists[i], tmp
+    return('The user is not in listed guilds')
 
 def saving_list(crew_list, guild_name):
     df = pd.DataFrame(crew_list)
@@ -74,7 +76,7 @@ def compare_list():
 def send_notification():
     pass
 
-list_g = ['우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
+list_g = ['PvP','우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
 '''
 user = str(input("What's the username ? "))
 store = find_user(user, list_g)
@@ -85,4 +87,7 @@ print("길드 인원 수 :", store[1])
 #compare_list()
 #saving_list(my_list)
 #compare_list()
-saving_everyday(list_g)
+#saving_everyday(list_g)
+user = '개척교회'
+store = find_user(user, list_g)
+print(store)
