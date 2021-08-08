@@ -1,8 +1,10 @@
 import requests, re
 from bs4 import BeautifulSoup
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
+from os import path
+
 import openpyxl
 
 # scraping the bdo guild page
@@ -30,7 +32,7 @@ def find_user(username, guild_lists):
 
         if username in guild:
             return guild_lists[i], tmp
-    return('The user is not in listed guilds')
+    return 'The user is not in listed guilds'
 
 def saving_list(crew_list, guild_name):
     df = pd.DataFrame(crew_list)
@@ -48,6 +50,16 @@ def saving_list(crew_list, guild_name):
 def saving_everyday(guild_list):
     for i in range(len(guild_list)):
         saving_list(crew_scraping(guild_list[i])[1], guild_list[i])
+
+# find the past days between the most current list and today's list.
+# if the most current list is from 3 days ago, it returns 3. if none of past lists are exists, it returns 0.
+def find_past_list(guild_name):
+    # 1 month = 31 days
+    for i in range(1, 32):
+        if path.exists(f'{guild_name}\{guild_name}_{(datetime.today() - timedelta(days = i)).strftime("%Y-%m-%d")}.xlsx') == True:
+            return i
+    return 0
+
 
 # argument past_list, current_list
 def compare_list():
@@ -84,11 +96,10 @@ print()
 print(store[0])
 print("길드 인원 수 :", store[1])
 '''
-#compare_list()
-#saving_list(my_list)
-#compare_list()
-saving_everyday(list_g)
 
+
+#saving_everyday(list_g)
+print(find_past_list('우리와써또와써'))
 
 #user = '개척교회'
 #store = find_user(user, list_g)
