@@ -62,11 +62,17 @@ def find_past_list(guild_name):
 
 
 # argument past_list, current_list
-def compare_list():
-    past_list = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')[0].values.tolist()
-    current_list = crew_scraping('우리와써또와써')[1]
+def compare_list(guild_list):
+    for i in range(len(guild_list)):
+        past_days = find_past_list(guild_list[i])
+        if past_days != 0:
+            past_list = pd.read_excel(f'{guild_list[i]}\{guild_list[i]}_{(datetime.today() - timedelta(days = past_days)).strftime("%Y-%m-%d")}.xlsx')[0].values.tolist()
+            print(past_list)
+            print((datetime.today() - timedelta(days = past_days)).strftime("%Y-%m-%d"))
 
-    past_list.sort()
+   # past_list = pd.read_excel('guild_info.xlsx', engine = 'openpyxl')[0].values.tolist()
+    current_list = crew_scraping('우리와써또와써')[1]
+'''     past_list.sort()
     current_list.sort()
     if(past_list == current_list):
         print("it's same")
@@ -84,7 +90,7 @@ def compare_list():
         if i not in past_list:
             new_users.append(i)
     print(new_users)
-
+    '''
 def send_notification():
     pass
 
@@ -100,7 +106,7 @@ print("길드 인원 수 :", store[1])
 
 #saving_everyday(list_g)
 print(find_past_list('우리와써또와써'))
-
+compare_list(list_g)
 #user = '개척교회'
 #store = find_user(user, list_g)
 #print(store)
