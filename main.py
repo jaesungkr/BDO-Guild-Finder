@@ -87,7 +87,9 @@ print("길드 인원 수 :", store[1])
 #compare_list()
 #saving_list(my_list)
 #compare_list()
-#saving_everyday(list_g)
-user = '개척교회'
-store = find_user(user, list_g)
-print(store)
+saving_everyday(list_g)
+
+
+#user = '개척교회'
+#store = find_user(user, list_g)
+#print(store)
