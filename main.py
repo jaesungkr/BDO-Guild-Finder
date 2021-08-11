@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 from os import path
+import tkinter as tk
 
 import openpyxl
 
@@ -70,33 +71,28 @@ def compare_list(guild_list):
             #print(past_list)
             date = (datetime.today() - timedelta(days = past_days)).strftime("%Y-%m-%d")
             current_list = pd.read_excel(f'{guild_list[i]}\{guild_list[i]}_{datetime.today().strftime("%Y-%m-%d")}.xlsx')[0].values.tolist()
-            print(current_list)
+            #print(current_list)
 
             past_list.sort()
             current_list.sort()
             if (past_list == current_list):
                 print(f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다")
+            else:
+                print(f'{guild_list[i]} 길드는 인원 변화가 있습니다')
+                left_users = []
+                for i in past_list:
+                    if i not in current_list:
+                        left_users.append(i)
+                print(f'나간 인원: {left_users}')
+
+                new_users = []
+                for i in current_list:
+                    if i not in past_list:
+                        new_users.append(i)
+                print(f'들어온 인원: {new_users}')
 
     #current_list = crew_scraping('우리와써또와써')[1]
-'''     past_list.sort()
-    current_list.sort()
-    if(past_list == current_list):
-        print("it's same")
-    print(past_list)
-    print(current_list)
 
-    left_users = []
-    for i in past_list:
-        if i not in current_list:
-            left_users.append(i)
-    print(left_users)
-
-    new_users = []
-    for i in current_list:
-        if i not in past_list:
-            new_users.append(i)
-    print(new_users)
-    '''
 def send_notification():
     pass
 
@@ -108,7 +104,6 @@ print()
 print(store[0])
 print("길드 인원 수 :", store[1])
 '''
-
 
 #saving_everyday(list_g)
 #print(find_past_list('우리와써또와써'))
