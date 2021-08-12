@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 import os
 from os import path
 import tkinter as tk
-
 import openpyxl
+
 
 # scraping the bdo guild page
 def crew_scraping(guild_name):
@@ -76,27 +76,48 @@ def compare_list(guild_list):
             past_list.sort()
             current_list.sort()
             if (past_list == current_list):
-                print(f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다")
+                #print(f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다")
+                text.insert('0.0',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다\n")
             else:
-                print(f'{guild_list[i]} 길드는 인원 변화가 있습니다')
+                text.insert('0.0',f'{guild_list[i]} 길드는 인원 변화가 있습니다\n')
                 left_users = []
                 for i in past_list:
                     if i not in current_list:
                         left_users.append(i)
-                print(f'나간 인원: {left_users}')
+                text.insert('0.0',f'나간 인원: {left_users}\n')
 
                 new_users = []
                 for i in current_list:
                     if i not in past_list:
                         new_users.append(i)
-                print(f'들어온 인원: {new_users}')
+                text.insert('0.0',f'들어온 인원: {new_users}\n')
 
     #current_list = crew_scraping('우리와써또와써')[1]
 
 def send_notification():
     pass
 
+
+
+
+
+
+
 list_g = ['PvP','우리와써또와써', 'Destroyer', '그리폰', '레드카드', '땡깡', '지나갑니다', 'ASH', '사도', '말랑말랑칸디둠해적단', 'Sin', '아기상어', '돔황챠', 'KiLL', '우릴만나다니', '베르세르크', '시바', '몰랑몰랑']
+saving_everyday(list_g)
+window = tk.Tk()
+window.title("BDO Guild Tracking")
+head = tk.Label(window, text='BDO Guild Tracking')
+head.grid(column=0, row=0)
+
+text = tk.Text()
+text.grid(column=0, row=1)
+scroll = tk.Scrollbar(command = text.yview)
+scroll.grid(column=1, row=1)
+button = tk.Button(window, text = 'test', command= lambda: compare_list(list_g))
+button.grid(column=0, row=2)
+window.mainloop()
+
 '''
 user = str(input("What's the username ? "))
 store = find_user(user, list_g)
@@ -105,9 +126,11 @@ print(store[0])
 print("길드 인원 수 :", store[1])
 '''
 
-#saving_everyday(list_g)
+
 #print(find_past_list('우리와써또와써'))
-compare_list(list_g)
+
+#compare_list(list_g)
+
 #user = '개척교회'
 #store = find_user(user, list_g)
 #print(store)
