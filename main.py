@@ -77,20 +77,21 @@ def compare_list(guild_list):
             current_list.sort()
             if (past_list == current_list):
                 #print(f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다")
-                text.insert('0.0',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다\n")
+                text.insert('end',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다\n\n")
             else:
-                text.insert('0.0',f'{guild_list[i]} 길드는 인원 변화가 있습니다\n')
+                text.insert('end', f'{guild_list[i]} 길드는 인원 변화가 있습니다\n')
                 left_users = []
-                for i in past_list:
-                    if i not in current_list:
-                        left_users.append(i)
-                text.insert('0.0',f'나간 인원: {left_users}\n')
+                for j in past_list:
+                    if j not in current_list:
+                        left_users.append(j)
+                text.insert('end',f'나간 인원: {left_users}\n')
 
                 new_users = []
-                for i in current_list:
-                    if i not in past_list:
-                        new_users.append(i)
-                text.insert('0.0',f'들어온 인원: {new_users}\n')
+                for j in current_list:
+                    if j not in past_list:
+                        new_users.append(j)
+                text.insert('end',f'들어온 인원: {new_users}\n')
+                text.insert('end', f'{len(past_list)}명 -> {len(current_list)}명\n\n')
 
     #current_list = crew_scraping('우리와써또와써')[1]
 
@@ -112,9 +113,10 @@ head.grid(column=0, row=0)
 
 text = tk.Text()
 text.grid(column=0, row=1)
+
 scroll = tk.Scrollbar(command = text.yview)
 scroll.grid(column=1, row=1)
-button = tk.Button(window, text = 'test', command= lambda: compare_list(list_g))
+button = tk.Button(window, text = '전체 길드 비교', command= lambda: compare_list(list_g))
 button.grid(column=0, row=2)
 window.mainloop()
 
