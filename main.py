@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import os
 from os import path
 import tkinter as tk
+from tkinter.font import Font
 import openpyxl
 
 
@@ -76,8 +77,8 @@ def compare_list(guild_list):
             past_list.sort()
             current_list.sort()
             if (past_list == current_list):
-                #print(f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다")
                 text.insert('end',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다\n\n")
+
             else:
                 text.insert('end', f'{guild_list[i]} 길드는 인원 변화가 있습니다\n')
                 left_users = []
