@@ -77,7 +77,7 @@ def compare_list(guild_list):
             past_list.sort()
             current_list.sort()
             if (past_list == current_list):
-                text.insert('end',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다\n\n")
+                text.insert('end',f"{guild_list[i]} 길드는 인원 변화가 지난 {past_days}일간 없습니다. 현재 인원: {len(current_list)}명\n\n")
 
             else:
                 text.insert('end', f'{guild_list[i]} 길드는 인원 변화가 있습니다\n')
