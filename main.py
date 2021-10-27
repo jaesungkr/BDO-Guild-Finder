@@ -7,7 +7,7 @@ from os import path
 import tkinter as tk
 from tkinter.font import Font
 import openpyxl
-import xlsxwriter
+from xlsxwriter import Workbook
 
 
 # scraping the bdo guild page
@@ -45,7 +45,7 @@ def saving_list(crew_list, guild_name):
     except FileExistsError:
         print(f'{guild_name} file already exists')
 
-    writer = pd.ExcelWriter(f'{guild_name}\{guild_name}_{datetime.today().strftime("%Y-%m-%d")}.xlsx', engine = 'xlsxwriter')
+    writer = pd.ExcelWriter(f'{guild_name}\{guild_name}_{datetime.today().strftime("%Y-%m-%d")}.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name='guild', index = False)
     writer.save()
 
@@ -58,7 +58,7 @@ def saving_everyday(guild_list):
 # if the most current list is from 3 days ago, it returns 3. if none of past lists are exists, it returns 0.
 def find_past_list(guild_name):
     # 1 month = 31 days
-    for i in range(1, 32):
+    for i in range(1, 50):
         if path.exists(f'{guild_name}\{guild_name}_{(datetime.today() - timedelta(days = i)).strftime("%Y-%m-%d")}.xlsx') == True:
             return i
     return 0
