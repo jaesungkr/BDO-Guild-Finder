@@ -7,6 +7,7 @@ from os import path
 import tkinter as tk
 from tkinter.font import Font
 import openpyxl
+import xlsxwriter
 
 
 # scraping the bdo guild page
